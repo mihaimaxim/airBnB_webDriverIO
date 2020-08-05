@@ -1,11 +1,12 @@
 let assert = require('assert');
-const { createDecipheriv } = require('crypto');
+let Page = require('../pageobjects/page');
+
 let todayNextWeek = new Date().getDate() + 7;
 let todayInTwoWeeks = new Date().getDate() + 14;
 
 describe('airBnb page', () => {
    it('should have the right title', () => {
-      browser.url('https://airbnb.com');
+      Page.prototype.open();
       browser.maximizeWindow();
       expect(browser).toHaveTitle(
          'Vacation Rentals, Homes, Experiences & Places - Airbnb'
@@ -111,8 +112,8 @@ describe('airBnb page', () => {
       secondProp.scrollIntoView({ behavior: 'smooth', block: 'center' });
       browser.pause(2000);
 
-      let thirdPro = $('div._8ssblpx:nth-child(3)');
-      thirdPro.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      let thirdProp = $('div._8ssblpx:nth-child(3)');
+      thirdProp.scrollIntoView({ behavior: 'smooth', block: 'center' });
       browser.pause(2000);
 
       // let fourthProp = $('div._8ssblpx:nth-child(4)');
