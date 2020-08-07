@@ -159,7 +159,7 @@ describe('airBnb page', () => {
       browser.pause(5000);
    });
 
-   it("should output the first prop's price and pin it", () => {
+   it("should output the prop's price and pin it", () => {
       let secondPropSpan = $('div._8ssblpx:nth-child(2)').$('span._1p7iugi');
       let secondPropPrice = secondPropSpan.getText();
       let stringArray = secondPropPrice.split(' ');
