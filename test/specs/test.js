@@ -154,17 +154,24 @@ describe('airBnb page', () => {
       browser.pause(3000);
    });
 
-   it('should go for a reservation', () => {
-      let reserve = $('button._1ot1we5p');
-      reserve.click();
-
-      let closeWindow = $('div._zpjce3');
-      closeWindow.click();
+   it('should go back to all props', () => {
+      browser.switchWindow('Metropolitan City of Rome · Stays · Airbnb');
       browser.pause(5000);
    });
 
-   it('should go back to all props', () => {
-      browser.switchWindow('Metropolitan City of Rome · Stays · Airbnb');
+   it("should output the first prop's price and pin it", () => {
+      let secondPropSpan = $('div._8ssblpx:nth-child(2)').$('span._1p7iugi');
+      let secondPropPrice = secondPropSpan.getText();
+      let stringArray = secondPropPrice.split(' ');
+      let price = stringArray[stringArray.length - 1];
+      console.log(price);
+
+      let secondPropOnMap = $(`span._1nq36y92*=${price}`);
+      secondPropOnMap.click();
+      browser.pause(3000);
+
+      let secondProp = $('div._8ssblpx:nth-child(2)');
+      secondProp.scrollIntoView({ behavior: 'smooth', block: 'center' });
       browser.pause(10000);
    });
 });
