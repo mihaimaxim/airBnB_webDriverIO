@@ -1,8 +1,11 @@
 let assert = require('assert');
 let Page = require('../pageobjects/page');
 
+let today = new Date().getDate();
 let todayNextWeek = new Date().getDate() + 7;
 let todayInTwoWeeks = new Date().getDate() + 14;
+let now = new Date();
+let daysOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
 
 describe('airBnb page', () => {
    it('should have the right title', () => {
@@ -32,11 +35,21 @@ describe('airBnb page', () => {
    });
 
    it('should pick the dates', () => {
-      let first = $(`._f8btejl=${todayNextWeek}`);
+      let first;
+      if (daysOfMonth - today < 7) {
+         first = $(`._f8btejl=${todayInTwoWeeks - daysOfMonth}`);
+      } else {
+         first = $(`._f8btejl=${todayNextWeek}`);
+      }
       first.click();
       browser.pause(1000);
 
-      let second = $(`._f8btejl=${todayInTwoWeeks}`);
+      let second;
+      if (daysOfMonth - todayNextWeek < 7) {
+         second = $(`._f8btejl=${todayInTwoWeeks - daysOfMonth}`);
+      } else {
+         second = $(`._f8btejl=${todayInTwoWeeks}`);
+      }
       second.click();
       browser.pause(1000);
    });
@@ -166,12 +179,25 @@ describe('airBnb page', () => {
       let price = stringArray[stringArray.length - 1];
       console.log(price);
 
+      let secondProp = $('div._8ssblpx:nth-child(2)');
+      secondProp.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      browser.pause(3000);
+
       let secondPropOnMap = $(`span._1nq36y92*=${price}`);
       secondPropOnMap.click();
       browser.pause(3000);
 
-      let secondProp = $('div._8ssblpx:nth-child(2)');
-      secondProp.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      browser.pause(10000);
+      let clickThatArrow = function (elem) {
+         elem.click();
+      };
+
+      let mapPropRightArrow = $('div._104eu75s')
+         .$('div._5ogqp7')
+         .$('div._1xzy2')
+         .$('div._l9kk1hc')
+         .$('button._1cnw8os');
+
+      browser.execute(clickThatArrow, mapPropRightArrow);
+      browser.pause(5000);
    });
 });
